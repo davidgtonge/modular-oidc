@@ -1,11 +1,8 @@
 {
-  "name": "wt-demo",
+  "name": "modular-oidc",
   "version": "1.0.0",
   "description": "",
-  "main": "hello.js",
-  "directories": {
-    "example": "examples"
-  },
+  "main": "client.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "create-server-keys": "node generate-client-keys > ./keys/server.json",
@@ -22,7 +19,7 @@
     "server-discovery": "wt create -n .well-known --secrets-file ./secrets/server.creds ./webtasks/discovery.js",
     "deploy": "npm run oidc-jwks && npm run server-jwks && npm run oidc-cb && npm run oidc-authorize && npm run server-authorize && npm run server-register && npm run server-token && npm run server-cb && npm run server-discovery"
   },
-  "author": "",
+  "author": "davidgtonge",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.17.2",

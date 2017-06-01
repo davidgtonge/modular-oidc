@@ -18,10 +18,22 @@ module.exports = (context, req, res) => {
       algorithm: "ES256",
       expiresIn: 30
     });
-    res.writeHead(302, {
-      location: `${IDP_AUTHORIZE}?state=${stateToken}&redirect=${HOST_CB}&issuer=${HOST}`
-    });
-    res.end();
+    var url = `${IDP_AUTHORIZE}?state=${stateToken}&redirect=${HOST_CB}&issuer=${HOST}`;
+
+    res.writeHead(200, { "Content-Type": "text/html " });
+    res.end(
+      `
+      <!doctype html>
+      <html>
+        <head>
+          <title>Module OIDC Demo</title>
+          <meta http-equiv="refresh" content="5;URL='${url}'" />
+        </head>
+        <body>
+          <p>To authorize <strong>${client.client_name}</strong>, please login to Google, redirecting...</p>
+        </body>
+      </html>`
+    );
   } catch (e) {
     console.log(e);
     res.writeHead(500);

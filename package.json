@@ -1,0 +1,39 @@
+{
+  "name": "wt-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "hello.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "create-server-keys": "node generate-client-keys > ./keys/server.json",
+    "create-oidc-keys": "node generate-client-keys > ./keys/oidc-client.json",
+    "create-keys": "npm run create-server-keys && npm run create-oidc-keys",
+    "oidc-jwks": "wt create -n oidc-jwks -s key_store=$(cat ./keys/oidc-client.json) ./webtasks/jwks.js",
+    "server-jwks": "wt create -n server-jwks -s key_store=$(cat ./keys/server.json) ./webtasks/jwks.js",
+    "oidc-cb": "wt create -n oidc-cb -d openid-client@1 -d jwk-to-pem@1 --secrets-file ./secrets/google.creds -s key_store=$(cat ./keys/oidc-client.json) ./webtasks/oidc-cb.js",
+    "oidc-authorize": "wt create -n oidc-authorize -d openid-client@1 -d jwk-to-pem@1 --secrets-file ./secrets/google.creds -s key_store=$(cat ./keys/oidc-client.json) ./webtasks/oidc-authorize.js",
+    "server-authorize": "wt create -n server-authorize -d jwk-to-pem@1 --secrets-file ./secrets/server.creds -s key_store=$(cat ./keys/server.json) ./webtasks/server-authorize.js",
+    "server-register": "wt create -n server-register -d jwk-to-pem@1 --secrets-file ./secrets/server.creds -s key_store=$(cat ./keys/server.json) --parse-body ./webtasks/server-register.js",
+    "server-token": "wt create -n server-token -d oidc-token-hash@1 -d jwk-to-pem@1 --secrets-file ./secrets/server.creds -s key_store=$(cat ./keys/server.json) --parse-body ./webtasks/server-token.js",
+    "server-cb": "wt create -n server-cb -d got@6 -d oidc-token-hash@1 -d jwk-to-pem@1 --secrets-file ./secrets/server.creds -s key_store=$(cat ./keys/server.json) ./webtasks/server-cb.js",
+    "server-discovery": "wt create -n .well-known --secrets-file ./secrets/server.creds ./webtasks/discovery.js",
+    "deploy": "npm run oidc-jwks && npm run server-jwks && npm run oidc-cb && npm run oidc-authorize && npm run server-authorize && npm run server-register && npm run server-token && npm run server-cb && npm run server-discovery"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "got": "^7.0.0",
+    "jsonwebtoken": "^7.4.1",
+    "jwk-to-pem": "^1.2.6",
+    "node-jose": "^0.9.4",
+    "oidc-provider": "^1.15.11",
+    "oidc-token-hash": "^1.0.1",
+    "openid-client": "^1.11.0",
+    "ramda": "^0.24.0"
+  }
+}

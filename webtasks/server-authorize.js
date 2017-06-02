@@ -26,11 +26,12 @@ module.exports = (context, req, res) => {
       <!doctype html>
       <html>
         <head>
-          <title>Module OIDC Demo</title>
+          <title>Modular OIDC Demo - Authorize</title>
           <meta http-equiv="refresh" content="5;URL='${url}'" />
         </head>
         <body>
-          <p>To authorize <strong>${client.client_name}</strong>, please login to Google, redirecting...</p>
+          <p>To authorize <strong>${client.client_name}</strong>, please login
+          to Google, redirecting...</p>
         </body>
       </html>`
     );

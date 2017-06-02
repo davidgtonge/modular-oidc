@@ -27,8 +27,20 @@ module.exports = (context, req, res) => {
         })
     )
     .then(url => {
-      res.writeHead(302, { location: url });
-      res.end();
+      res.writeHead(200, { "Content-Type": "text/html " });
+      res.end(
+        `
+        <!doctype html>
+        <html>
+          <head>
+            <title>Modular OIDC Demo - Google RP Authorize</title>
+            <meta http-equiv="refresh" content="5;URL='${url}'" />
+          </head>
+          <body>
+            <p>Please wait while we redirect you to Google...</p>
+          </body>
+        </html>`
+      );
     })
     .catch(err => {
       console.log(err);

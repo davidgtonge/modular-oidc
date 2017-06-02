@@ -37,10 +37,22 @@ module.exports = (context, req, res) => {
             )
         )
         .then(clientToken => {
-          res.writeHead(302, {
-            location: `${stateParams.redirect}?token=${clientToken}`
-          });
-          res.end();
+          var url = `${stateParams.redirect}?token=${clientToken}`;
+          res.writeHead(200, { "Content-Type": "text/html " });
+          res.end(
+            `
+            <!doctype html>
+            <html>
+              <head>
+                <title>Modular OIDC Demo - Google RP Callback</title>
+                <meta http-equiv="refresh" content="5;URL='${url}'" />
+              </head>
+              <body>
+                <p>Thank you for authenticating yourself via Google, please wait
+                while we redirect you...</p>
+              </body>
+            </html>`
+          );
         });
     })
     .catch(err => {

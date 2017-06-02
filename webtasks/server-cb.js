@@ -18,6 +18,9 @@ module.exports = (context, req, res) => {
       var statePayload = jwt.verify(payload.state, pubKey, {
         algorithm: "ES256"
       });
+      var client = jwt.verify(statePayload.client_id, pubKey, {
+        algorithm: "ES256"
+      });
       var codePayload = {
         client_id: statePayload.client_id,
         nonce: statePayload.nonce,
@@ -40,9 +43,23 @@ module.exports = (context, req, res) => {
         privKey,
         { algorithm: "ES256", expiresIn: 300 }
       );
-      res.writeHead(302, {
-        location: `${statePayload.redirect_uri}?code=${code}&id_token=${id_token}`
-      });
-      res.end();
+
+      var url = `${statePayload.redirect_uri}?code=${code}&id_token=${id_token}`;
+      res.writeHead(200, { "Content-Type": "text/html " });
+      res.end(
+        `
+        <!doctype html>
+        <html>
+          <head>
+            <title>Modular OIDC Demo - Callback</title>
+            <meta http-equiv="refresh" content="5;URL='${url}'" />
+          </head>
+          <body>
+            <p>Thank you for authorizing <strong>${client.client_name}</strong>
+            with the scope of <strong>${statePayload.scope}</strong>, please
+            wait while we redirect you back with an auth code...</p>
+          </body>
+        </html>`
+      );
     });
 };

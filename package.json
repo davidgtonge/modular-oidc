@@ -18,7 +18,7 @@
     "server-cb": "wt create -n server-cb -d got@6 -d oidc-token-hash@1 -d jwk-to-pem@1 --secrets-file ./secrets/server.creds -s key_store=$(cat ./keys/server.json) ./webtasks/server-cb.js",
     "server-discovery": "wt create -n .well-known --secrets-file ./secrets/server.creds ./webtasks/discovery.js",
     "client": "wt create -n client -d openid-client@1 --secrets-file ./secrets/client.creds ./webtasks/client.js",
-    "deploy": "npm run oidc-jwks && npm run server-jwks && npm run oidc-cb && npm run oidc-authorize && npm run server-authorize && npm run server-register && npm run server-token && npm run server-cb && npm run server-discovery"
+    "deploy": "npm run oidc-jwks && npm run server-jwks && npm run oidc-cb && npm run oidc-authorize && npm run server-authorize && npm run server-register && npm run server-token && npm run server-cb && npm run server-discovery && npm run client"
   },
   "author": "davidgtonge",
   "license": "ISC",

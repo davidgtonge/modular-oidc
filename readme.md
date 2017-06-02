@@ -21,7 +21,6 @@ The authorization code is also generated as a JWT with a short lifetime. This JW
 
 1. `npm run create-keys` - this will create keypairs for the RP and OP web tasks.
 2. `cp ./secrets/_google.creds ./secrets/google.creds` and fill in the details
-3. Adjust the `server.creds` to use urls specific to your webtask cluster.
+3. Adjust `server.creds` and `client.creds` to use urls specific to your webtask cluster.
 4. `npm run deploy` (you will need to first install `wt-cli` and run `wt init`)
-5. `node client.js` - this will run an example client
-6. Visit `http://localhost:3002/authorize` to see the code in action.
+5. Visit the last url output from the above command (the client)
